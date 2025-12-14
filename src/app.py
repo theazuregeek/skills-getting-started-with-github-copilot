@@ -22,6 +22,49 @@ app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
 # In-memory activity database
 activities = {
     "Chess Club": {
+        "Soccer Team": {
+            "instructor": "Coach Ramirez",
+            "description": "Outdoor soccer training and matches",
+            "schedule": "Mondays and Thursdays, 4:00 PM - 6:00 PM",
+            "max_participants": 22,
+            "participants": ["liam@mergington.edu", "noah@mergington.edu"]
+        },
+        "Basketball Club": {
+            "instructor": "Coach Patel",
+            "description": "Basketball skills, scrimmages, and conditioning",
+            "schedule": "Wednesdays and Fridays, 4:00 PM - 6:00 PM",
+            "max_participants": 18,
+            "participants": ["ava@mergington.edu", "sophia@mergington.edu"]
+        },
+        "Art Club": {
+            "instructor": "Ms. Alvarez",
+            "description": "Explore drawing, painting, and mixed media projects",
+            "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
+            "max_participants": 15,
+            "participants": ["mia@mergington.edu", "isabella@mergington.edu"]
+        },
+        "Drama Club": {
+            "instructor": "Ms. Bennett",
+            "description": "Acting, stagecraft, and production for school plays",
+            "schedule": "Tuesdays, 4:00 PM - 6:00 PM",
+            "max_participants": 25,
+            "participants": ["logan@mergington.edu", "harper@mergington.edu"]
+        },
+        "Debate Team": {
+            "instructor": "Mr. Carter",
+            "description": "Practice argumentative skills and compete in debate tournaments",
+            "schedule": "Fridays, 4:00 PM - 5:30 PM",
+            "max_participants": 16,
+            "participants": ["ethan@mergington.edu", "oliver@mergington.edu"]
+        },
+        "Science Club": {
+            "instructor": "Dr. Nguyen",
+            "description": "Hands-on experiments, research projects, and science fair prep",
+            "schedule": "Thursdays, 3:30 PM - 5:00 PM",
+            "max_participants": 18,
+            "participants": ["charlotte@mergington.edu", "amelia@mergington.edu"]
+        },
+        "instructor": "Dr. James Wilson",
         "description": "Learn strategies and compete in chess tournaments",
         "schedule": "Fridays, 3:30 PM - 5:00 PM",
         "max_participants": 12,
@@ -54,6 +97,8 @@ def get_activities():
 
 @app.post("/activities/{activity_name}/signup")
 def signup_for_activity(activity_name: str, email: str):
+
+
     """Sign up a student for an activity"""
     # Validate activity exists
     if activity_name not in activities:
@@ -61,6 +106,10 @@ def signup_for_activity(activity_name: str, email: str):
 
     # Get the specific activity
     activity = activities[activity_name]
+
+    # Validate student is not already signed up
+    if email in activity["participants"]:
+        raise HTTPException(status_code=400, detail="Student already signed up for this activity")
 
     # Add student
     activity["participants"].append(email)
