@@ -15,9 +15,9 @@
     <main>
       <section id="activities-container">
         <h3>Available Activities</h3>
-        <div id="activities-list">
+        <div id="activities-list" aria-live="polite">
           <!-- Activities will be loaded here -->
-          <p>Loading activities...</p>
+          <p class="info">Loading activities...</p>
         </div>
       </section>
 
@@ -37,7 +37,7 @@
           </div>
           <button type="submit">Sign Up</button>
         </form>
-        <div id="message" class="hidden"></div>
+        <div id="message" class="message hidden" role="status" aria-live="polite" aria-atomic="true"></div>
       </section>
     </main>
 
